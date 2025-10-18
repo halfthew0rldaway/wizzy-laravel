@@ -1,13 +1,15 @@
 @extends('backend.dashboard.index')
+
 @section('title', 'Data Pegawai')
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="fw-bold">Data Pegawai</h4>
-        <a href="" class="btn btn-primary btn-sm">+ Tambah Pegawai</a>
+       <a href="{{ route('emp_create') }}" class="btn btn-primary btn-sm">+ Tambah Pegawai</a>
     </div>
 
-    @if(session('success'))
+    {{-- Pesan Sukses --}}
+    @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
@@ -25,20 +27,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- You can loop employee data here --}}
-                    @foreach($emp as $employee)
-                        <tr>
-                            <td>{{ $employee->id_emp }}</td>
-                            <td>{{ $employee->nama }}</td>
-                            <td>{{ $employee->email }}</td>
-                            <td>{{ $employee->alamat }}</td>
-                            <td>{{ $employee->jabatan_id }}</td>
-                            <td>
-                                {{-- Action buttons like edit/delete here --}}
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
+    @forelse ($emp as $row)
+        <tr>
+            <td>{{ $row->id_emp }}</td>
+            <td>{{ $row->nama }}</td>
+            <td>{{ $row->email }}</td>
+            <td>{{ $row->alamat }}</td>
+            <td>{{ $row->jabatan_id }}</td>
+            <td>
+                <a href="{{ route('emp_edit', parameters: $row->id_emp) }}" class="btn btn-warning btn-sm">Edit</a>
+                <form action="{{ route('emp_delete', parameters: $row->id_emp) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Yakin hapus data ini?')">Hapus</button>
+                </form>
+            </td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="6" class="text-center">Belum ada data pegawai</td>
+        </tr>
+    @endforelse
+</tbody>
             </table>
         </div>
     </div>
