@@ -25,24 +25,26 @@
     <div class="container-fluid">
         <div class="row">
             {{-- Sidebar --}}
-            <aside class="col-12 col-md-3 col-lg-2 bg-white border-end shadow-sm p-3 min-vh-100">
-                <h6 class="fw-bold text-secondary mb-3">Menu</h6>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a href="/dashboard" class="nav-link active fw-semibold text-primary">Dashboard</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="/employee" class="nav-link text-dark">Pegawai</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="/payroll" class="nav-link text-dark">Payroll</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="/user" class="nav-link text-dark">User</a>
-                    </li>
-                </ul>
-            </aside>
-
+<aside class="col-12 col-md-3 col-lg-2 bg-white border-end shadow-sm p-3 min-vh-100">
+    <h6 class="fw-bold text-secondary mb-3">Menu</h6>
+    <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+            <a href="/dashboard" class="nav-link {{ Request::is('dashboard') ? 'active fw-semibold text-primary' : 'text-dark' }}">Dashboard</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="/employee" class="nav-link {{ Request::is('employee*') ? 'active fw-semibold text-primary' : 'text-dark' }}">Pegawai</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="/position" class="nav-link {{ Request::is('position*') ? 'active fw-semibold text-primary' : 'text-dark' }}">Jabatan</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="/payroll" class="nav-link {{ Request::is('payroll*') ? 'active fw-semibold text-primary' : 'text-dark' }}">Payroll</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="/user" class="nav-link {{ Request::is('user*') ? 'active fw-semibold text-primary' : 'text-dark' }}">User</a>
+        </li>
+    </ul>
+</aside>
             {{-- Konten --}}
             <main class="col-12 col-md-9 col-lg-10 p-4">
                 <h2 class="fw-bold text-dark mb-4">Dashboard</h2>
