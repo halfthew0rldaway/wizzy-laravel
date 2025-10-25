@@ -16,11 +16,14 @@ Route::get('/employee/create', [EmployeeController::class, 'create'])->name('emp
 Route::post('/employee/store', [EmployeeController::class, 'store'])->name('emp_store');
 Route::delete('/employee/delete/{id}', [EmployeeController::class, 'delete'])->name('emp_delete');
 Route::get('/employee/edit/{id}', [EmployeeController::class, 'edit'])->name('emp_edit');
+Route::put('/employee/update/{id}', [EmployeeController::class, 'update'])->name('emp_update');
 
 // Routes Position (Jabatan)
 Route::get('/position', [PositionController::class, 'index'])->name('position');
 Route::get('/position/create', [PositionController::class, 'create'])->name('position_create');
 Route::post('/position/store', [PositionController::class, 'store'])->name('position_store');
 Route::delete('/position/delete/{id}', [PositionController::class, 'delete'])->name('position_delete');
+Route::get('/position/edit/{id}', [PositionController::class, 'edit'])->name('position_edit');
+Route::put('/position/update/{id}', [PositionController::class, 'update'])->name('position_update');
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

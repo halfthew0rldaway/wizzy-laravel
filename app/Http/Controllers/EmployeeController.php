@@ -11,39 +11,45 @@ class EmployeeController extends Controller
         $emp = Employee::all();
         return view('backend.employees.index', compact('emp'));
     }
+    
     public function create()
     {
         return view('backend.employees.create');
     }
+    
     // Simpan data baru
-public function store(Request $request)
-{
-    $request->validate([
-        'jabatan_id' => 'required',
-        'nama'       => 'required|string|max:255',
-        'email'      => 'required|email|unique:employees,email',
-        'alamat'     => 'nullable|string',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'jabatan_id' => 'required',
+            'nama'       => 'required|string|max:255',
+            'email'      => 'required|email|unique:employees,email',
+            'alamat'     => 'nullable|string',
+        ]);
 
-    Employee::create($request->all());
+        Employee::create($request->all());
 
-    return redirect()->route('emp')->with('success', 'Data pegawai berhasil ditambahkan.');
-}
-// Hapus data
-public function delete($id)
-{
-    $employee = Employee::findOrFail($id);
-    $employee->delete();
+        return redirect()->route('emp')->with('success', 'Data pegawai berhasil ditambahkan.');
+    }
+    
+    // Hapus data
+    public function delete($id)
+    {
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
 
-    return redirect()->route('emp')->with('success', 'Data pegawai berhasil dihapus.');
-}
+        return redirect()->route('emp')->with('success', 'Data pegawai berhasil dihapus.');
+    }
 
- public function edit($id)
+    // Form edit data
+    public function edit($id)
     {
         $employee = Employee::findOrFail($id);
         return view('backend.employees.edit', compact('employee'));
     }
-public function update(Request $request, $id)
+    
+    // Update data
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
