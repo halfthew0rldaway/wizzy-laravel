@@ -20,7 +20,7 @@ class PositionController extends Controller
         }
         $p = $query->orderBy('nama_jabatan','asc')->get();
 
-        return view('backend.positions.index', compact('positions', 'p'));
+        return view('backend.positions.index', compact('p'));
     }
 
     // Form tambah data

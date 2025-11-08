@@ -10,5 +10,5 @@ class Employee extends Model
     use HasFactory;
     protected $primaryKey = 'id_emp';
     public $incrementing = true;
-    protected $fillable = ['jabatan_id', 'nama', 'email', 'alamat'];
+    protected $fillable = ['jabatan_id', 'nama', 'email', 'alamat', 'img'];
 }
