@@ -5,11 +5,16 @@
 @section('content')
 <div class="container">
     <h2>Tambah Pegawai</h2>
-    <form action="{{ route('emp_store') }}" method="POST"enctype="multipart/form-data">>
+    <form action="{{ route('emp_store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
-            <label>Jabatan ID</label>
-            <input type="text" name="jabatan_id" class="form-control" required>
+            <label>Jabatan</label>
+            <select name="jabatan_id" class="form-control" required>
+                <option value="">-- Pilih Jabatan --</option>
+                @foreach($positions as $pos)
+                    <option value="{{ $pos->position_id }}" {{ old('jabatan_id') == $pos->position_id ? 'selected' : '' }}>{{ $pos->nama_jabatan }}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="mb-3">
@@ -27,10 +32,10 @@
             <textarea name="alamat" class="form-control"></textarea>
         </div>
         <div class="mb-3">
-            <label>foto</label>
-            <input type="file" name="foto" class="form-control" accept="image/*">
+            <label>Foto</label>
+            <input type="file" name="img" class="form-control" accept="image/*">
         
-            @error('foto')
+            @error('img')
                 <div class="text-danger small mt-1">
                     {{ $message }}
                 </div>

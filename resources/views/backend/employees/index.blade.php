@@ -44,7 +44,7 @@
                             <td>{{ $row->nama }}</td>
                             <td>{{ $row->email }}</td>
                             <td>{{ $row->alamat }}</td>
-                            <td>{{ $row->jabatan_id }}</td>
+                            <td>{{ $row->position->nama_jabatan  ?? '-'}}</td>
                             <td>
                                 <a href="{{ route('emp_edit', $row->id_emp) }}" class="btn btn-warning btn-sm">Edit</a>
                                 <form action="{{ route('emp_delete', $row->id_emp) }}" method="POST" class="d-inline">

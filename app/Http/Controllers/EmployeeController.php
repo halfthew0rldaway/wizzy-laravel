@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Models\Position;
 
 class EmployeeController extends Controller
 {
@@ -15,7 +16,9 @@ class EmployeeController extends Controller
 
     public function create()
     {
-        return view('backend.employees.create');
+        $positions = Position::all();
+
+        return view('backend.employees.create', compact('positions'));
     }
 
     // Simpan data baru
@@ -26,7 +29,7 @@ class EmployeeController extends Controller
             'nama'       => 'required|string|max:255',
             'email'      => 'required|email|unique:employees,email',
             'alamat'     => 'nullable|string',
-            'foto'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'img'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = [
@@ -37,8 +40,8 @@ class EmployeeController extends Controller
         ];
 
         // Upload foto jika ada
-        if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
+        if ($request->hasFile('img')) {
+            $file = $request->file('img');
             $namaFile = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('image'), $namaFile);
 
@@ -63,7 +66,8 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employee = Employee::findOrFail($id);
-        return view('backend.employees.edit', compact('employee'));
+        $positions = \App\Models\Position::all();
+        return view('backend.employees.edit', compact('employee', 'positions'));
     }
 
     // Update data
@@ -71,10 +75,10 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'nama'       => 'required|string|max:255',
-            'email'      => 'required|email|unique:employees,email,' . $id,
+            'email'      => 'required|email|unique:employees,email,' . $id . ',id_emp',
             'alamat'     => 'nullable|string',
             'jabatan_id' => 'required|string',
-            'foto'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'img'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $employee = Employee::findOrFail($id);
@@ -87,12 +91,16 @@ class EmployeeController extends Controller
         ];
 
         // Upload foto baru jika ada
-        if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
+        if ($request->hasFile('img')) {
+            // Hapus foto lama jika ada
+            if ($employee->img && file_exists(public_path('image/' . $employee->img))) {
+                @unlink(public_path('image/' . $employee->img));
+            }
+            $file = $request->file('img');
             $namaFile = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('image'), $namaFile);
 
-            $data['foto'] = $namaFile;
+            $data['img'] = $namaFile;
         }
 
         $employee->update($data);
