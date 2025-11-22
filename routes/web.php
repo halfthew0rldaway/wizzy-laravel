@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PositionController;
 
@@ -26,4 +27,13 @@ Route::delete('/position/delete/{id}', [PositionController::class, 'delete'])->n
 Route::get('/position/edit/{id}', [PositionController::class, 'edit'])->name('position_edit');
 Route::put('/position/update/{id}', [PositionController::class, 'update'])->name('position_update');
 
+Route::get('/payroll', [PayrollController::class, 'index'])->name('payroll');
+Route::get('/payroll/create/{id}', [PayrollController::class, 'create'])->name('payroll_create');
+Route::post('/payroll/store', [PayrollController::class, 'store'])->name('payroll_store');
+
+
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+
+
